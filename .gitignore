@@ -1,4 +1,4 @@
-*
+
 !.gitignore
 !README.md
 !go-development/
@@ -7,3 +7,8 @@
 !user-*/**
 !image-generator/
 !image-generator/**
+figma*
+dt-zentao
+agent-list-import/
+pdf
+.system

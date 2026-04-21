@@ -1,0 +1,4 @@
+interface:
+  display_name: "Log Fix Branch"
+  short_description: "Read local or SSH logs and fix bugs"
+  default_prompt: "Use $log-fix-branch to inspect logs from a local path or SSH host, then patch and verify the bug on the current branch."

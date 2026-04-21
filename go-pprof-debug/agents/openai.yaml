@@ -1,0 +1,4 @@
+interface:
+  display_name: "Go Pprof Debug"
+  short_description: "Auto-detect pprof routes and analyze Go profiles"
+  default_prompt: "Use $go-pprof-debug to detect the current project's pprof route, probe a running service, and analyze CPU or memory hotspots."

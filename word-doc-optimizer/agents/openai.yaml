@@ -1,0 +1,7 @@
+interface:
+  display_name: "Word Doc Optimizer"
+  short_description: "Polish and restructure Word docs."
+  default_prompt: "Use $word-doc-optimizer to improve this Word document's clarity, structure, tone, and concision without changing its meaning."
+
+policy:
+  allow_implicit_invocation: true
