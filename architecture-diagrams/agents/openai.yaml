@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Diagrams"
+  short_description: "Draw physical and deployment diagrams"
+  default_prompt: "Use $architecture-diagrams to produce both a physical architecture diagram and a deployment architecture diagram for this system."

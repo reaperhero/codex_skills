@@ -1,0 +1,4 @@
+interface:
+  display_name: "Go 开发"
+  short_description: "实现、调试并测试 Go 代码"
+  default_prompt: "Use $go-development 在当前仓库中实现或修复 Go 代码，并用聚焦测试完成验证。"

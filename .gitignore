@@ -1,0 +1,7 @@
+*
+!.gitignore
+!README.md
+!go-development/
+!go-development/**
+!user-*/
+!user-*/**
