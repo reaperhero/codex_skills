@@ -1,0 +1,14 @@
+.gitignore
+  h_eca8f0fc34c4a0 1,10-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.0",
+  "base_commit_sha": "0b7d3cc3a3905e5b073c6d7a869ec83984fd6e43",
+  "prompts": {},
+  "humans": {
+    "h_eca8f0fc34c4a0": {
+      "author": "manlu"
+    }
+  }
+}
