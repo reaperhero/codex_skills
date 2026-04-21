@@ -5,3 +5,5 @@
 !go-development/**
 !user-*/
 !user-*/**
+!image-generator/
+!image-generator/**

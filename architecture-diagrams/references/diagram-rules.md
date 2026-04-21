@@ -1,46 +1,46 @@
-# Diagram Rules
+# 架构图补充规则
 
-Use this reference when the architecture is large, the input is messy, or the first draft risks becoming unreadable.
+当系统规模较大、输入材料混乱，或者第一版草图已经开始影响可读性时，再读取本文件。
 
-## Scope Selection
+## 作用域选择
 
-Pick one abstraction level per diagram.
+每张图只选一个主要抽象层级。
 
-- System level: best for explaining full topology across major platforms
-- Platform level: best for clusters, gateways, data stores, and shared infrastructure
-- Service level: best for individual workloads and their deployment units
+- 系统级：适合解释跨平台、跨网络的大范围整体拓扑
+- 平台级：适合展示集群、网关、数据存储和共享基础设施
+- 服务级：适合展示具体工作负载及其部署单元
 
-Avoid mixing all three in one diagram unless the user explicitly wants a dense view.
+除非用户明确要求高密度视图，否则不要把三个层级揉进一张图里。
 
-## Physical Diagram Heuristics
+## 物理架构图启发式规则
 
-- Prefer zones like `Internet`, `DMZ`, `VPC`, `Subnet A`, `K8s Cluster`, `Data Tier`
-- Show important trust boundaries and cross-zone links
-- Group identical servers into a summarized node when counts matter more than identity
-- If HA matters, label it tersely, such as `"App Nodes x3"`
+- 优先按 `Internet`、`DMZ`、`VPC`、`子网 A`、`K8s 集群`、`数据层` 这类区域组织
+- 表达重要信任边界和跨区链路
+- 当多台服务器只是数量不同、角色相同时，可合并成汇总节点
+- 如果高可用很重要，可以用简短方式表达，例如 `"应用节点 x3"`
 
-## Deployment Diagram Heuristics
+## 部署架构图启发式规则
 
-- Prefer environments first, then cluster or namespace, then workload
-- Show rollout chain only if it helps the reader
-- Distinguish deployable units from infrastructure boxes
-- Put config, secrets, and registry near the workloads that consume them
+- 优先先画环境，再画集群或命名空间，最后画工作负载
+- 只有在确实帮助理解时才画完整发布链路
+- 明确区分“基础设施盒子”和“可部署单元”
+- 配置、密钥和镜像仓库应尽量放在它们所服务的工作负载附近
 
-## Mermaid Patterns
+## Mermaid 模式
 
-### Physical
+### 物理架构图
 
 ```mermaid
 flowchart LR
-  user["Users"] --> edge["CDN / WAF"]
-  edge --> lb["Load Balancer"]
+  user["用户"] --> edge["CDN / WAF"]
+  edge --> lb["负载均衡"]
 
-  subgraph vpc["Production VPC"]
-    subgraph app["Application Subnet"]
-      cluster["Kubernetes Cluster"]
+  subgraph vpc["生产 VPC"]
+    subgraph app["应用子网"]
+      cluster["Kubernetes 集群"]
     end
-    subgraph data["Data Subnet"]
-      db["PostgreSQL Primary"]
+    subgraph data["数据子网"]
+      db["PostgreSQL 主库"]
       cache["Redis"]
     end
   end
@@ -49,14 +49,14 @@ flowchart LR
   cluster --> cache
 ```
 
-### Deployment
+### 部署架构图
 
 ```mermaid
 flowchart LR
-  ci["CI Pipeline"] --> registry["Image Registry"]
+  ci["CI 流水线"] --> registry["镜像仓库"]
 
-  subgraph prod["Production"]
-    subgraph cluster["K8s Cluster"]
+  subgraph prod["生产环境"]
+    subgraph cluster["K8s 集群"]
       ingress["Ingress Controller"]
       api["API Deployment"]
       worker["Worker Deployment"]
@@ -68,26 +68,26 @@ flowchart LR
   registry --> worker
   registry --> cron
   ingress --> api
-  api --> db["Managed PostgreSQL"]
-  worker --> mq["Message Queue"]
+  api --> db["托管 PostgreSQL"]
+  worker --> mq["消息队列"]
 ```
 
-## Final Check
+## 最终检查
 
-- If a node label feels sentence-like, shorten it
-- If more than 12-15 nodes appear in a single flat row, add grouping
-- If arrows cross heavily, rotate or regroup before finalizing
-- If the physical and deployment diagrams are nearly identical, one of them is under-specified
+- 如果某个节点标签像一句完整句子，优先缩短
+- 如果一排平铺节点已经超过 12 到 15 个，应考虑分组
+- 如果连线交叉明显，先调整方向或重新分组
+- 如果物理图和部署图几乎一样，说明至少有一张图的视角还不够明确
 
-## Image Export Checklist
+## 图片导出检查清单
 
-When exporting to an image file instead of returning Mermaid only:
+当需要导出图片文件，而不是只返回 Mermaid 时：
 
-- Use PNG by default
-- Save to `/Users/edy/Downloads/AI/images`
-- Ensure the directory exists before writing
-- Choose a semantic English filename such as `physical-deployment-architecture-20260420-153000.png`
-- Return the absolute path to the saved file
-- Keep all text inside boxes with wrapping enabled
-- Resize text, cards, gutters, or canvas when readability is weak
-- Do not place source-reference text in the image
+- 默认使用 PNG
+- 保存到 `/Users/edy/Downloads/AI/images`
+- 写文件前确保目录存在
+- 选择有语义的英文文件名，例如 `physical-deployment-architecture-20260420-153000.png`
+- 在回复中返回图片绝对路径
+- 保证所有文字都在框内，并开启自动换行
+- 如果可读性不足，优先调整字号、卡片高度、间距或画布尺寸
+- 图片中不要放来源说明文字

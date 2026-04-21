@@ -1,139 +1,139 @@
 ---
 name: architecture-diagrams
-description: Create architecture diagrams when the user asks for system topology, technical architecture, deployment layout, physical architecture, node relationships, network zones, traffic paths, or environment structure. This skill is specifically for requests that should produce both a physical architecture diagram and a deployment architecture diagram in the same response, unless the user explicitly asks for only one.
+description: 当用户需要系统拓扑、技术架构、部署结构、物理架构、节点关系、网络分区、流量路径或环境结构等架构图时使用此 skill。除非用户明确只要其中一种，否则默认同时输出物理架构图和部署架构图。
 ---
 
-# Architecture Diagrams
+# 架构图
 
-## Overview
+## 概述
 
-Use this skill when the user wants architecture diagrams rather than prose-only explanation. The default deliverable is a pair of diagrams: one physical architecture diagram and one deployment architecture diagram.
+当用户需要的是架构图，而不是纯文字说明时，使用这个 skill。默认交付物是一组双图：一张物理架构图，一张部署架构图。
 
-## Output Contract
+## 输出约定
 
-Unless the user explicitly opts out, always provide both:
+除非用户明确排除，否则始终同时提供：
 
-- A `Physical Architecture Diagram`
-- A `Deployment Architecture Diagram`
+- 一张 `物理架构图`
+- 一张 `部署架构图`
 
-Each diagram should be self-contained, readable, and consistent in naming. If the source material is incomplete, make the smallest reasonable assumptions, label them clearly, and keep the diagrams internally consistent.
+每张图都应当能够独立阅读，命名保持一致，结构清晰。如果输入资料不完整，应做最小且合理的假设，并明确标注这些假设，同时保持两张图内部一致。
 
-## Recommended Format
+## 推荐格式
 
-- Default to Mermaid for text-based diagram output
-- Use `flowchart LR` unless the structure is unusually tall
-- Quote node labels when they contain spaces or punctuation
-- Keep node labels short enough to stay readable
-- Group by zone, host, cluster, environment, or network boundary when useful
-- Show traffic direction and major dependencies explicitly
+- 文字版架构图默认优先使用 Mermaid
+- 除非结构明显更适合纵向排布，否则使用 `flowchart LR`
+- 节点标签中如果有空格或标点，使用带引号的写法
+- 节点文字应尽量简短，保证可读性
+- 需要时按区域、主机、集群、环境或网络边界分组
+- 明确表示流量方向和关键依赖关系
 
-If the user asks for an image file, generate the image after drafting the Mermaid structure first. Before finalizing, check that labels fit inside nodes, wrap naturally, and do not overlap.
+如果用户要求输出图片文件，先草拟 Mermaid 结构，再生成图片。最终输出前要检查每个标签是否放得进节点、是否正常换行、是否存在重叠。
 
-## Image Output Rules
+## 图片输出规则
 
-When the task requires an image file, follow these defaults unless the user explicitly overrides them:
+当任务需要输出图片文件时，除非用户明确指定其他要求，否则遵循以下默认规则：
 
-- Prefer `PNG`
-- Save images under `/Users/edy/Downloads/AI/images`
-- Create the output directory before saving if it does not exist
-- Use a semantic English filename, adding a date or timestamp when needed to avoid overwriting
-- Always return the absolute image path in the response
-- Do not include source citations or reference notes inside the image
+- 优先使用 `PNG`
+- 图片默认保存到 `/Users/edy/Downloads/AI/images`
+- 保存前如果目录不存在，先创建目录
+- 文件名使用有语义的英文名，必要时附加日期或时间戳避免覆盖
+- 在回复中始终返回图片的绝对路径
+- 图片中不要加入来源说明或参考资料备注
 
-For diagrams with boxes and text:
+对于带框和文字的架构图：
 
-- Ensure all text stays inside its box
-- Wrap text by default
-- Avoid overlap, clipping, crowding, line collisions, or text extending beyond the canvas
+- 所有文字都必须在框内
+- 默认开启自动换行
+- 避免文字重叠、截断、过密、压线或超出画布
 
-Before delivering any laid-out image, perform a self-check. If text is too dense, overlapping, out of bounds, or hard to read, adjust font size, line height, card height, spacing, or canvas size first and only then finalize the image.
+在输出任何已经排版完成的图片前，必须先自检。如果发现文字过密、重叠、越界或难以辨认，先调整字号、行高、卡片高度、间距或画布尺寸，再输出最终结果。
 
-## Diagram Roles
+## 图的职责
 
-### Physical Architecture Diagram
+### 物理架构图
 
-Use this to show what the system is made of and where it lives.
+这张图用于表现系统由什么组成，以及这些组件“位于哪里”。
 
-Include the most relevant physical or infrastructure-oriented elements such as:
+应优先包含这些与物理或基础设施相关的元素：
 
-- Users, clients, or edge entry points
-- CDN, WAF, load balancer, gateway, or ingress
-- VPC, subnet, AZ, IDC, office, rack, host, VM, or bare metal grouping
-- Kubernetes clusters, nodes, or server groups
-- Databases, caches, queues, object storage, and third-party dependencies
-- Key network links and security boundaries
+- 用户、客户端或边缘入口
+- CDN、WAF、负载均衡、网关或 Ingress
+- VPC、子网、可用区、机房、办公室、机架、主机、虚拟机或裸金属分组
+- Kubernetes 集群、节点或服务器组
+- 数据库、缓存、消息队列、对象存储和第三方依赖
+- 关键网络链路与安全边界
 
-Focus on topology and placement. Do not overload this diagram with rollout strategy details.
+重点是拓扑和位置关系，不要在这张图里堆太多发布流程细节。
 
-### Deployment Architecture Diagram
+### 部署架构图
 
-Use this to show how software is deployed and promoted.
+这张图用于表现软件是如何部署、组织和运行的。
 
-Include the most relevant deployment-oriented elements such as:
+应优先包含这些与部署相关的元素：
 
-- Environments like dev, test, staging, prod
-- Regions, clusters, namespaces, node pools, or hosts
-- Deployable units such as services, pods, containers, jobs, or sidecars
-- Deployment controllers, CI/CD path, image registry, config or secret sources
-- Service-to-service calls that matter at runtime
-- High availability or scaling shape when it changes deployment behavior
+- 环境，如开发、测试、预发、生产
+- 区域、集群、命名空间、节点池或宿主机
+- 可部署单元，如服务、Pod、容器、Job 或 Sidecar
+- 部署控制器、CI/CD 路径、镜像仓库、配置源或密钥源
+- 对运行时真正重要的服务间调用关系
+- 当高可用或扩缩容会影响部署理解时，也应表示出来
 
-Focus on runtime placement and release structure. Do not duplicate every physical detail unless it matters to deployment understanding.
+重点是运行时落位和发布结构。除非某些物理细节会影响部署理解，否则不要机械重复物理图里的全部内容。
 
-## Workflow
+## 工作流
 
-### 1. Extract the architecture nouns
+### 1. 提取架构名词
 
-Identify:
+优先识别：
 
-- Entry points
-- Core services
-- Data stores
-- Infrastructure boundaries
-- Environments
-- Deployment targets
-- External systems
+- 流量入口
+- 核心服务
+- 数据存储
+- 基础设施边界
+- 环境
+- 部署目标
+- 外部系统
 
-Normalize names before drawing. Use one canonical name per component.
+在画图前先统一命名。同一个组件尽量只保留一个标准名称。
 
-### 2. Separate physical concerns from deployment concerns
+### 2. 区分物理视角与部署视角
 
-Ask of each item:
+对每个元素都先判断：
 
-- Is this about where the system lives or what network boundary it crosses
-- Or is this about how software units are packaged, deployed, scaled, or promoted
+- 它更偏向“系统位于哪里”或“跨越了什么网络边界”
+- 还是更偏向“软件如何被打包、部署、扩缩容和发布”
 
-Put shared concepts in both diagrams only when they help orientation.
+只有在确实有助于理解时，才让同一个概念同时出现在两张图里。
 
-### 3. Reduce clutter
+### 3. 降低杂乱度
 
-- Merge repeated nodes when they are identical at the chosen level of abstraction
-- Omit incidental implementation details
-- Prefer one clear edge over many redundant edges
-- Keep each diagram to the smallest faithful slice of the system
+- 如果多个节点在当前抽象层级上是等价的，可以合并
+- 省略对当前目标没有帮助的实现细节
+- 一条清晰的连线优先于多条冗余连线
+- 每张图只保留最小但真实的系统切片
 
-### 4. Annotate assumptions
+### 4. 标注假设
 
-If information is missing, add a short `Assumptions` list after the diagrams. Keep it short and concrete.
+当信息不足时，在图后补一个简短的 `假设说明` 列表。保持短小、具体、可核对。
 
-## Quality Bar
+## 质量标准
 
-Before finalizing, check:
+在最终输出前，检查以下内容：
 
-- Both diagrams are present
-- Names are consistent between diagrams
-- Arrows have clear direction
-- Network or environment boundaries are visible where relevant
-- Important data stores and external dependencies are not floating without context
-- The deployment diagram shows deployable units, not just boxes copied from the physical view
-- The physical diagram shows topology, not just a service list
+- 两张图都已提供
+- 两张图中的命名保持一致
+- 箭头方向清晰
+- 需要强调的网络边界或环境边界已体现
+- 关键数据存储和外部依赖没有脱离上下文悬空出现
+- 部署图体现了可部署单元，而不是简单复制物理图的盒子
+- 物理图体现了拓扑，而不是只列服务名
 
-## Prompt Shapes
+## 提示词示例
 
-- `Use $architecture-diagrams to draw the current system. Output both a physical architecture diagram and a deployment architecture diagram.`
-- `Use $architecture-diagrams based on this service list and deployment notes.`
-- `Use $architecture-diagrams to turn this README into physical and deployment architecture diagrams.`
+- `使用 $architecture-diagrams 绘制当前系统，并同时输出物理架构图和部署架构图。`
+- `使用 $architecture-diagrams，基于这份服务清单和部署说明输出两张架构图。`
+- `使用 $architecture-diagrams，把这份 README 转成物理架构图和部署架构图。`
 
-## Resources
+## 资源
 
-- Read [references/diagram-rules.md](references/diagram-rules.md) when the system is large, ambiguous, or needs clearer abstraction boundaries
+- 当系统规模较大、输入较混乱或抽象层级不清晰时，读取 [references/diagram-rules.md](references/diagram-rules.md)

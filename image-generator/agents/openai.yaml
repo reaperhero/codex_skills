@@ -1,0 +1,4 @@
+interface:
+  display_name: "Image Generator"
+  short_description: "Standardize image output and layout"
+  default_prompt: "Use $image-generator to generate an image file with the default save path, layout self-check, and absolute-path return."

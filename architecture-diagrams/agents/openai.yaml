@@ -1,4 +1,4 @@
 interface:
-  display_name: "Architecture Diagrams"
-  short_description: "Draw physical and deployment diagrams"
-  default_prompt: "Use $architecture-diagrams to produce both a physical architecture diagram and a deployment architecture diagram for this system."
+  display_name: "架构图"
+  short_description: "输出物理图和部署图"
+  default_prompt: "使用 $architecture-diagrams 为当前系统同时输出物理架构图和部署架构图。"
