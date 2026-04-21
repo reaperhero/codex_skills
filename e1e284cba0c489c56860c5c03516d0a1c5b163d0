@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.0",
+  "base_commit_sha": "e1e284cba0c489c56860c5c03516d0a1c5b163d0",
+  "prompts": {},
+  "humans": {
+    "h_eca8f0fc34c4a0": {
+      "author": "manlu"
+    }
+  }
+}
