@@ -1,0 +1,30 @@
+README.md
+  2e3aa2f002c7e969 10,25,35,37-38,44-46
+  h_4b770d1e00b7bf 68-75
+.gitignore
+  h_4b770d1e00b7bf 15-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.10",
+  "base_commit_sha": "8d57525f26058e4c40118855ca058858e96ae30b",
+  "prompts": {
+    "2e3aa2f002c7e969": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019daf1b-d05c-7a03-9a44-a4b185a6f78a",
+        "model": "gpt-5.4"
+      },
+      "human_author": "manlu <manlu@dtstack.com>",
+      "total_additions": 8,
+      "total_deletions": 2,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_4b770d1e00b7bf": {
+      "author": "manlu <manlu@dtstack.com>"
+    }
+  }
+}
